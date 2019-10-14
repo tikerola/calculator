@@ -30,13 +30,16 @@ function App() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
 
+    ctx.fillStyle = 'rgb(188, 197, 154)'
+    ctx.fillRect(30, 40, 190, 50)
+
     ctx.fillStyle = 'black'
     let xCorrection = 0
     numbersOnScreen.forEach((number, index) => {
 
-     
+
       //if (index >= 1 && (numbersOnScreen[index - 1] === 1 || numbersOnScreen[index - 1] === '.'))
-        //xCorrection += 7
+      //xCorrection += 7
 
       ctx.fillText(number, screenCoords[numbersOnScreen.length - index].x - xCorrection, screenCoords[index].y)
     })
@@ -46,15 +49,16 @@ function App() {
   const handleClick = e => {
     const canvas = canvasRef.current
     const rect = canvas.getBoundingClientRect()
-    const ctx = canvas.getContext('2d')
+    
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
 
     const mark = drawNumberOrOperator(x, y)
 
     if (mark === '=') {
-
       console.log(numbers)
+      const arr = '¯\\_(ツ )_/¯'.split('')
+      setNumbersOnScreen(arr)
       return
     }
 
@@ -64,28 +68,25 @@ function App() {
     else if (mark === 'clear') {
       setNumbers([])
       setNumbersOnScreen([])
-      ctx.fillStyle = 'rgb(188, 197, 154)'
-      ctx.fillRect(30, 40, 190, 50)
     }
 
     else {
-
-      if (mark === '%' || mark === '+' || mark === '-' || mark === '/' || mark === 'x')
+      
+      if (/[^0-9.]/.test(mark))
         setNumbersOnScreen([mark])
 
-      else {
+      else if (numbersOnScreen.length < 10) {
         if (typeof numbersOnScreen[0] === 'string' && numbersOnScreen[0] !== '.')
           setNumbersOnScreen([...numbersOnScreen.slice(1), mark])
         else
           setNumbersOnScreen([...numbersOnScreen, mark])
       }
 
+      else
+        return
+
       setNumbers([...numbers, mark])
-      ctx.fillStyle = 'rgb(188, 197, 154)'
-      ctx.fillRect(30, 40, 190, 50)
-
     }
-
   }
 
 
