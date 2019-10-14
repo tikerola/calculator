@@ -6,6 +6,7 @@ import screenCoords from './helpers/screenCoords'
 
 function App() {
   const [numbers, setNumbers] = useState([])
+  const [numbersOnScreen, setNumbersOnScreen] = useState([])
 
   const canvasRef = React.useRef()
 
@@ -24,15 +25,23 @@ function App() {
     }
   }, [])
 
+
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
 
     ctx.fillStyle = 'black'
-    numbers.forEach((number, index) => {
-      ctx.fillText(number, screenCoords[numbers.length - index].x, screenCoords[index].y)
+    let xCorrection = 0
+    numbersOnScreen.forEach((number, index) => {
+
+     
+      //if (index >= 1 && (numbersOnScreen[index - 1] === 1 || numbersOnScreen[index - 1] === '.'))
+        //xCorrection += 7
+
+      ctx.fillText(number, screenCoords[numbersOnScreen.length - index].x - xCorrection, screenCoords[index].y)
     })
-  }, [numbers])
+  }, [numbersOnScreen])
+
 
   const handleClick = e => {
     const canvas = canvasRef.current
@@ -52,17 +61,33 @@ function App() {
     if (mark === 'missHit')
       return
 
-    if (mark === 'clear') {
+    else if (mark === 'clear') {
       setNumbers([])
+      setNumbersOnScreen([])
       ctx.fillStyle = 'rgb(188, 197, 154)'
       ctx.fillRect(30, 40, 190, 50)
     }
-    else if (numbers.length < 10) {
+
+    else {
+
+      if (mark === '%' || mark === '+' || mark === '-' || mark === '/' || mark === 'x')
+        setNumbersOnScreen([mark])
+
+      else {
+        if (typeof numbersOnScreen[0] === 'string' && numbersOnScreen[0] !== '.')
+          setNumbersOnScreen([...numbersOnScreen.slice(1), mark])
+        else
+          setNumbersOnScreen([...numbersOnScreen, mark])
+      }
+
       setNumbers([...numbers, mark])
       ctx.fillStyle = 'rgb(188, 197, 154)'
       ctx.fillRect(30, 40, 190, 50)
+
     }
+
   }
+
 
   return (
     <div className='container'>
