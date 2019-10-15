@@ -7,6 +7,7 @@ import screenCoords from './helpers/screenCoords'
 function App() {
   const [numbers, setNumbers] = useState([])
   const [numbersOnScreen, setNumbersOnScreen] = useState([])
+  const [specialChars, setSpecialChars] = useState(0)
 
   const canvasRef = React.useRef()
 
@@ -34,14 +35,18 @@ function App() {
     ctx.fillRect(30, 40, 190, 50)
 
     ctx.fillStyle = 'black'
+    let totalCorrection = numbersOnScreen.join().match(/[.1]/g) ? numbersOnScreen.join().match(/[.1]/g).length : 0
+    
     let xCorrection = 0
     numbersOnScreen.forEach((number, index) => {
 
+      if (index > 0 && (numbersOnScreen[index - 1] === 1 || numbersOnScreen[index - 1] === '.'))
+        xCorrection += 1
+        
+      ctx.fillText(number, screenCoords[numbersOnScreen.length - (index + 1)].x - xCorrection * 8 + totalCorrection * 8, screenCoords[index].y)
 
-      //if (index >= 1 && (numbersOnScreen[index - 1] === 1 || numbersOnScreen[index - 1] === '.'))
-      //xCorrection += 7
+      
 
-      ctx.fillText(number, screenCoords[numbersOnScreen.length - index].x - xCorrection, screenCoords[index].y)
     })
   }, [numbersOnScreen])
 
@@ -49,7 +54,7 @@ function App() {
   const handleClick = e => {
     const canvas = canvasRef.current
     const rect = canvas.getBoundingClientRect()
-    
+
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
 
@@ -57,7 +62,7 @@ function App() {
 
     if (mark === '=') {
       console.log(numbers)
-      const arr = '¯\\_(ツ )_/¯'.split('')
+      const arr = '¯\\_ツ _/¯'.split('')
       setNumbersOnScreen(arr)
       return
     }
@@ -68,14 +73,18 @@ function App() {
     else if (mark === 'clear') {
       setNumbers([])
       setNumbersOnScreen([])
+      setSpecialChars(0)
     }
 
     else {
-      
+
       if (/[^0-9.]/.test(mark))
         setNumbersOnScreen([mark])
 
       else if (numbersOnScreen.length < 10) {
+        if (mark === '.' || mark === 1)
+          setSpecialChars(specialChars + 1)
+
         if (typeof numbersOnScreen[0] === 'string' && numbersOnScreen[0] !== '.')
           setNumbersOnScreen([...numbersOnScreen.slice(1), mark])
         else
