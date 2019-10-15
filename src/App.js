@@ -43,9 +43,7 @@ function App() {
       if (index > 0 && (numbersOnScreen[index - 1] === 1 || numbersOnScreen[index - 1] === '.'))
         xCorrection += 1
         
-      ctx.fillText(number, screenCoords[numbersOnScreen.length - (index + 1)].x - xCorrection * 8 + totalCorrection * 8, screenCoords[index].y)
-
-      
+      ctx.fillText(number, screenCoords[numbersOnScreen.length - (index + 1)].x - xCorrection * 8 + totalCorrection * 8, screenCoords[index].y) 
 
     })
   }, [numbersOnScreen])
