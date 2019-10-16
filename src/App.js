@@ -7,7 +7,7 @@ import screenCoords from './helpers/screenCoords'
 function App() {
   const [numbers, setNumbers] = useState([])
   const [numbersOnScreen, setNumbersOnScreen] = useState([])
-  const [specialChars, setSpecialChars] = useState(0)
+  
 
   const canvasRef = React.useRef()
 
@@ -71,7 +71,6 @@ function App() {
     else if (mark === 'clear') {
       setNumbers([])
       setNumbersOnScreen([])
-      setSpecialChars(0)
     }
 
     else {
@@ -80,9 +79,7 @@ function App() {
         setNumbersOnScreen([mark])
 
       else if (numbersOnScreen.length < 10) {
-        if (mark === '.' || mark === 1)
-          setSpecialChars(specialChars + 1)
-
+        
         if (typeof numbersOnScreen[0] === 'string' && numbersOnScreen[0] !== '.')
           setNumbersOnScreen([...numbersOnScreen.slice(1), mark])
         else
