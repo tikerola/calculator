@@ -6,11 +6,17 @@ import { inputIsValid } from './helpers/validateInput'
 
 
 function App() {
+
+  // numbers sisältää kaikki painetut merkit
+  // numbersOnScreen taas kulloinkin näkyvissä olevat merkit
+
   const [numbers, setNumbers] = useState([])
   const [numbersOnScreen, setNumbersOnScreen] = useState([])
 
 
   const canvasRef = React.useRef()
+
+  // Piirretään laskin näytölle
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -27,6 +33,8 @@ function App() {
     }
   }, [])
 
+
+  // Pyyhitään edellisen kierroksen tekstit pois ja päivitetään näytölle uusi, painettu numero
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -50,12 +58,16 @@ function App() {
   }, [numbersOnScreen])
 
 
+  // Kun painetaan canvas-alueelle
+
   const handleClick = e => {
     const canvas = canvasRef.current
     const rect = canvas.getBoundingClientRect()
 
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
+
+    // hakee viimeiseksi painetun merkin
 
     const mark = drawNumberOrOperator(x, y)
 
@@ -73,6 +85,8 @@ function App() {
       setNumbers([])
       setNumbersOnScreen([])
     }
+
+    // jos painettu nappi oli muuta kuin AC, CE tai =
 
     else {
 
