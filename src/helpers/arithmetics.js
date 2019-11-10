@@ -1,41 +1,59 @@
 //peruslaskutoimitukset
+//saa syötteeksi talukon
 
-//+ (summa)
-//muuttujaan tulos summataan for lausekkeessa jokainen taulukon luvun alkio
-export function summa ( luvut ) {
-    let tulos;
-        for (let luku of tulos) {
-            tulos += luku;
-        }
-    return tulos;
+//let valimuisti = 0;
+let eka = 0;
+let toka = 0;
+let lasku;
+let vastaus = 0;
+
+//aluksi taulukossa on vain kolme alkiota, mutta sehän tulee kasvamaan kun laksutoimitusta
+//jatketaan, ellei sitten keksi parempaa
+console.log('Laskemista komentorivillä');
+
+let t = [];
+function laskuri( t ) {
+    console.log('Siirretään taulukon arvot muuttujiin');
+    eka = t[0];
+    console.log('Muuttujassa eka on: ', eka);
+    toka = t[2];
+    console.log('Muuttujassa toka on: ', toka);
+    //lasku: +, -, x, /
+    lasku = t[1];
+    console.log('Muuttujassa lasku on: ', lasku);
+
+    if (lasku === '+') vastaus = summa(eka, toka);
+    if (lasku === '-') vastaus = erotus(eka, toka);
+    if (lasku === 'x') vastaus = tulo(eka, toka);
+    if (lasku === '/') vastaus = osamaara(eka, toka);
+}//laskuri
+
+//Siis idea on että apufunktioita kutsutaan tarpeen mukaan, ja valimuistiin laitetaan
+//vastaus muistiin, uuden laskun tulos lasketaan vastaukseen ja näiden välillä tehtään 
+//sitten lasku, joka halutaan.
+//iffeihin lisätään priorisointi
+//TAI: odotetaan käyttäjältä joko = tai seuraavaa laskua (+ jne) ja toimitaan sitten
+//eli laitetaan pitkä taulukko
+
+//apufunktiot
+function summa ( a, b ) {
+    return a + b;
+    console.log('Lukujen ', a, 'ja ', b, 'summa on: ', vastaus);
 }
 
-//- (erotus) JÄRKEILY ON KESKEN ELI TÄMÄ MUUTTUU!!!!!
-//Siis taulukon ensimmäisestä vähennetään jokaisella kierroksella seuraava
-// joka jää tulokseen, josta taas
-//vähennetään seuraava
-export function erotus ( luvut ) {
-    let tulos = luvut[0]; //tästä vähennetään taulukon seuraavat luvut
-    //kiepin pitää alkaa taulukon [1]:stä eteenpäin
-    for (let luku of luvut) {
-        tulos -= luku
-    }
-    return tulos;
+function erotus ( a, b ) {
+    return a - b;
+    console.log('Lukujen ', a, 'ja ', b, 'erotus on: ', vastaus);
 }
 
 //x (tulo)
-//taulukon [0] kerrotaan ensin yhdellä (joka on valmiina tulos muuttujassa)
-//sitten taulukon [1] x muuttujan tulo arvolla joka on [0]x[1] jne taulukon loppuun) 
-export function tulo ( luvut ) {
-    let tulos = 1;
-    for ( let luku of luvut) {
-        tulos *= luku;
-    }
-    return tulos;
+function tulo ( a, b ) {
+    return a * b;
+    console.log('Lukujen ', a, 'ja ', b, 'tulo on: ', vastaus);
 }
 
 // (osamäärä) lasku
-export function osamaara ( eka, toka) {
-    let tulos = eka / toka;
-    return tulos;
+function osamaara ( a, b ){
+   return a / b;
+   console.log('Lukujen ', a, 'ja ', b, 'osamäärä on: ', vastaus);
 }
