@@ -3,6 +3,7 @@ import './App.css'
 import drawNumberOrOperator from './helpers/hitbox'
 import screenCoords from './helpers/screenCoords'
 import { inputIsValid } from './helpers/validateInput'
+import { laskuri } from './helpers/arithmetics'
 
 
 function App() {
@@ -73,8 +74,9 @@ function App() {
 
     if (mark === '=') {
       console.log(numbers)
-      const arr = '¯\\_ツ _/¯'.split('')
-      setNumbersOnScreen(arr)
+      //const arr = '¯\\_ツ _/¯'.split('')
+      
+      setNumbersOnScreen(laskuri(numbers).toString().split(''))
       return
     }
 

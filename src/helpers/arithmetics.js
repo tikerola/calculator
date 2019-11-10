@@ -11,8 +11,8 @@ let vastaus = 0;
 //jatketaan, ellei sitten keksi parempaa
 console.log('Laskemista komentorivillä');
 
-let t = [];
-function laskuri( t ) {
+// let t = [];
+export function laskuri( t ) {
     console.log('Siirretään taulukon arvot muuttujiin');
     eka = t[0];
     console.log('Muuttujassa eka on: ', eka);
@@ -26,6 +26,8 @@ function laskuri( t ) {
     if (lasku === '-') vastaus = erotus(eka, toka);
     if (lasku === 'x') vastaus = tulo(eka, toka);
     if (lasku === '/') vastaus = osamaara(eka, toka);
+
+    return vastaus
 }//laskuri
 
 //Siis idea on että apufunktioita kutsutaan tarpeen mukaan, ja valimuistiin laitetaan
@@ -37,23 +39,23 @@ function laskuri( t ) {
 
 //apufunktiot
 function summa ( a, b ) {
-    return a + b;
     console.log('Lukujen ', a, 'ja ', b, 'summa on: ', vastaus);
+    return a + b;
 }
 
 function erotus ( a, b ) {
-    return a - b;
     console.log('Lukujen ', a, 'ja ', b, 'erotus on: ', vastaus);
+    return a - b;
 }
 
 //x (tulo)
 function tulo ( a, b ) {
-    return a * b;
     console.log('Lukujen ', a, 'ja ', b, 'tulo on: ', vastaus);
+    return a * b;
 }
 
 // (osamäärä) lasku
 function osamaara ( a, b ){
-   return a / b;
-   console.log('Lukujen ', a, 'ja ', b, 'osamäärä on: ', vastaus);
+    console.log('Lukujen ', a, 'ja ', b, 'osamäärä on: ', vastaus);
+    return a / b;
 }
