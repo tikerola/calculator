@@ -1,15 +1,20 @@
 //peruslaskutoimitukset
-//saa syötteeksi talukon
+//saa syötteeksi talukon?? niin mä ymmärsin :)
+//MITEN SE TOIMII, SE SYÖTE? KUN PAINELEE PITEMMÄN LASKUTOIMITUKSEN??
+//Onko sulla mitään ideoita????
 
-//let valimuisti = 0;
+let valimuisti = 0;
 let eka = 0;
 let toka = 0;
 let lasku;
 let vastaus = 0;
+let uusiLasku;
+let c = 0;
 
 //aluksi taulukossa on vain kolme alkiota, mutta sehän tulee kasvamaan kun laksutoimitusta
 //jatketaan, ellei sitten keksi parempaa
 console.log('Laskemista komentorivillä');
+
 
 // let t = [];
 export function laskuri( t ) {
@@ -22,20 +27,36 @@ export function laskuri( t ) {
     lasku = t[1];
     console.log('Muuttujassa lasku on: ', lasku);
 
+//eli kaksi numeroo menis tähän
     if (lasku === '+') vastaus = summa(eka, toka);
     if (lasku === '-') vastaus = erotus(eka, toka);
     if (lasku === 'x') vastaus = tulo(eka, toka);
     if (lasku === '/') vastaus = osamaara(eka, toka);
 
-    return vastaus
+    return vastaus;
 }//laskuri
 
-//Siis idea on että apufunktioita kutsutaan tarpeen mukaan, ja valimuistiin laitetaan
-//vastaus muistiin, uuden laskun tulos lasketaan vastaukseen ja näiden välillä tehtään 
-//sitten lasku, joka halutaan.
-//iffeihin lisätään priorisointi
-//TAI: odotetaan käyttäjältä joko = tai seuraavaa laskua (+ jne) ja toimitaan sitten
-//eli laitetaan pitkä taulukko
+//laskujärjestys luetaan JÄLLEEN SYÖTE. Ja käytetään muuttujaa lasku, jossa on edellinen
+//JA uusiLasku johon luetaan uusin lasku
+//ajattelin sillee, että koko homma menis johonkin luuppii ja sieltä vois kokeila näitä tarpeen 
+//mukaan
+function jatko(uusilasku, c) {
+    //tulo
+    if ( uusilasku === 'x' || uusiLasku === '/' ) {
+    valimuisti = vastaus;
+    //varmuuden vuoksi, ei ehkä oikeesti tarvii nollaa?
+    vastaus = 0;
+        if (uusiLasku === 'x') {
+            vastaus = tulo(valimuisti, c)
+        }
+        else {
+            vastaus = osamaara(valimuisti, c);
+        }
+    if (uusiLasku === '+' || uusiLasku === '-' )
+    //eli ei tee mitään!
+    return;
+    }
+}//jatko
 
 //apufunktiot
 function summa ( a, b ) {
@@ -55,7 +76,7 @@ function tulo ( a, b ) {
 }
 
 // (osamäärä) lasku
-function osamaara ( a, b ){
+function osamaara ( a, b ) {
     console.log('Lukujen ', a, 'ja ', b, 'osamäärä on: ', vastaus);
     return a / b;
 }
